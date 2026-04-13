@@ -144,9 +144,7 @@ def chunk_document_parent_child(document: dict,
 # Batch processing — handle a list of documents
 def chunk_documents(documents: list[dict],
                     strategy: str = "parent_child") -> tuple[list[dict], list[dict]]:
-    """
-    Chunk a list of documents using the chosen strategy.
-    """
+
     all_parents = []
     all_children = []
 
