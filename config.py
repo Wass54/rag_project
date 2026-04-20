@@ -35,7 +35,7 @@ TOP_K_FINAL = 5         # number of chunks kept after reranking
 RERANKER_MODEL = "cross-encoder/ms-marco-MiniLM-L-6-v2"
 
 # Chunks with a reranker score below this threshold are considered out-of-scope
-CE_RELEVANCE_THRESHOLD = 0.3
+CE_RELEVANCE_THRESHOLD = -2
 
 # PATHS
 DATA_FOLDER = "./data/pdfs"
