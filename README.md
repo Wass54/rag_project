@@ -52,25 +52,6 @@ Semantic search            BM25 search
 | LLM | Groq API (`llama-3.3-70b-versatile`) |
 | Interface | Streamlit |
 
-## Project structure
-
-```
-rag_project/
-├── config.py
-├── preprocessing/
-│   └── pdf_loader.py
-├── indexing/
-│   ├── chunking.py
-│   ├── embedding.py
-│   └── bm25_index.py
-├── retrieval/
-│   ├── rrf.py
-│   └── reranker.py
-├── generation/
-│   └── llm_answer.py
-└── app/
-    └── streamlit_app.py
-```
 
 ## Setup
 
