@@ -165,30 +165,3 @@ def chunk_documents(documents: list[dict],
         print(f"  - {len(all_children)} chunks")
 
     return all_parents, all_children
-
-
-# Quick test
-if __name__ == "__main__":
-    import sys
-    import os
-    sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
-    from preprocessing.pdf_loader import load_pdfs_from_folder
-    from config import DATA_FOLDER
-
-    print("Loading documents...")
-    docs = load_pdfs_from_folder(DATA_FOLDER)
-
-    if not docs:
-        print("No documents found. Add PDF files to data/pdfs/ first.")
-        sys.exit(1)
-
-    print("\n--- Simple chunking ---")
-    _, simple_chunks = chunk_documents(docs, strategy="simple")
-    print(f"First chunk preview:\n{simple_chunks[0]['text'][:300]}\n")
-
-    print("--- Parent-Child chunking ---")
-    parents, children = chunk_documents(docs, strategy="parent_child")
-    print(f"Parent 0 preview (first 300 chars):\n{parents[0]['text'][:300]}\n")
-    print(f"Child 0 preview (first 300 chars):\n{children[0]['text'][:300]}")
-    print(f"\nChild 0 parent_id: {children[0]['parent_id']}")

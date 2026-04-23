@@ -69,29 +69,3 @@ def bm25_search(query: str, index: BM25Okapi, chunks: list[dict],
         })
 
     return results
-
-
-# Quick test
-if __name__ == "__main__":
-    from preprocessing.pdf_loader import load_pdfs_from_folder
-    from indexing.chunking import chunk_documents
-    from config import DATA_FOLDER
-
-    docs = load_pdfs_from_folder(DATA_FOLDER)
-    _, children = chunk_documents(docs, strategy="parent_child")
-
-    index, chunks = build_bm25_index(children)
-
-    query1 = "How does the attention mechanism work?"
-    print(f"\nQuery: '{query1}'")
-    results1 = bm25_search(query1, index, chunks, top_k=3)
-    for i, r in enumerate(results1):
-        print(f"[{i+1}] Score: {r['score']} | {r['metadata']['filename']}")
-        print(f"     {r['text'][:150]}...")
-
-    query2 = "RAGAS faithfulness metric"
-    print(f"\nQuery: '{query2}'")
-    results2 = bm25_search(query2, index, chunks, top_k=3)
-    for i, r in enumerate(results2):
-        print(f"[{i+1}] Score: {r['score']} | {r['metadata']['filename']}")
-        print(f"     {r['text'][:150]}...")

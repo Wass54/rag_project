@@ -44,38 +44,3 @@ def reciprocal_rank_fusion(results_lists: list[list[dict]],
         merged.append(result)
 
     return merged
-
-
-
-# Quick test
-if __name__ == "__main__":
-    from preprocessing.pdf_loader import load_pdfs_from_folder
-    from indexing.chunking import chunk_documents
-    from indexing.embedding import index_chunks, semantic_search, load_parent_store
-    from indexing.bm25_index import build_bm25_index, bm25_search
-    from config import DATA_FOLDER
-
-    docs = load_pdfs_from_folder(DATA_FOLDER)
-    parents, children = chunk_documents(docs, strategy="parent_child")
-
-    # Build both indexes
-    index_chunks(parents, children, reset=True)
-    bm25_index, bm25_chunks = build_bm25_index(children)
-
-    query = "How does the attention mechanism work?"
-    print(f"Query: '{query}'\n")
-
-    # Get results from both methods
-    sem_results = semantic_search(query, top_k=10)
-    bm25_results = bm25_search(query, bm25_index, bm25_chunks, top_k=10)
-
-    print(f"Semantic search: {len(sem_results)} results")
-    print(f"BM25 search:     {len(bm25_results)} results")
-
-    # Merge with RRF
-    merged = reciprocal_rank_fusion([sem_results, bm25_results], top_k=5)
-
-    print(f"\nAfter RRF fusion — top 5:")
-    for i, r in enumerate(merged):
-        print(f"[{i+1}] RRF score: {r['rrf_score']} | {r['metadata']['filename']}")
-        print(f"     {r['text'][:150]}...")

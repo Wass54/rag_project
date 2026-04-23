@@ -161,26 +161,3 @@ def load_parent_store() -> dict:
     print(f"Parent store loaded: {len(parent_store)} parents.")
     return parent_store
 
-
-# Quick test
-if __name__ == "__main__":
-    from preprocessing.pdf_loader import load_pdfs_from_folder
-    from indexing.chunking import chunk_documents
-
-    print("Loading PDFs...")
-    docs = load_pdfs_from_folder(DATA_FOLDER)
-
-    print("\nChunking...")
-    parents, children = chunk_documents(docs, strategy="parent_child")
-
-    print("\nIndexing...")
-    parent_store = index_chunks(parents, children, reset=True)
-
-    query = "How does the attention mechanism work in transformers?"
-    print(f"\nTest query: '{query}'")
-    results = semantic_search(query, top_k=3)
-
-    print(f"\nTop 3 results:")
-    for i, r in enumerate(results):
-        print(f"\n[{i+1}] Score: {r['score']} | File: {r['metadata']['filename']}")
-        print(f"    {r['text'][:200]}...")
